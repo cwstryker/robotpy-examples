@@ -27,7 +27,7 @@ if typing.TYPE_CHECKING:
 
 class PhysicsEngine:
     """
-    Simulates a 4-wheel robot using Tank Drive joystick control
+    Simulates a single joint robot with joystick control
     """
 
     def __init__(self, physics_controller: PhysicsInterface, robot: "MyRobot"):

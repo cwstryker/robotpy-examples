@@ -53,14 +53,14 @@ class MyRobot(wpilib.TimedRobot):
             self.controller.setP(self.kArmKp)
 
     def teleopPeriodic(self) -> None:
-        left_y_stick = -self.joystick.getY()
         if self.joystick.getTrigger():
-            # Here we run PID control like normal, with a setpoint read from
+            # Here we run PID control like normal, with a set point read from
             # preferences in degrees
-            pidOutput = self.controller.calculate(
-                self.encoder.getDistance(), math.radians(self.armPosition * left_y_stick)
+            pid_output = self.controller.calculate(
+                self.encoder.getDistance(),
+                math.radians(self.armPosition * -self.joystick.getY()),
             )
-            self.motor.setVoltage(pidOutput)
+            self.motor.setVoltage(pid_output)
         else:
             # Otherwise we disable the motor
             self.motor.set(0.0)
