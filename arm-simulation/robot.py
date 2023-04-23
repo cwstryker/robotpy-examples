@@ -10,6 +10,14 @@ import wpimath.controller
 
 
 class MyRobot(wpilib.TimedRobot):
+    """
+    A robot program that controls an arm pivoting at the top of a tower.
+
+    The arm position is controlled by Joystick 0 in Teleop mode only.
+      - The Y-axis (i.e. Xbox left stick) controls the angle of the arm.
+      - When pressed, the trigger button (i.e. A button) enables arm control, otherwise the arm motor is disabled.
+    """
+
     kMotorPort = 0
     kEncoderAChannel = 0
     kEncoderBChannel = 1
@@ -26,6 +34,7 @@ class MyRobot(wpilib.TimedRobot):
         # The P gain for the PID controller that drives this arm.
         self.kArmKp = 50.0
 
+        # The full scale deviation of the arm from horizontal (in degrees)
         self.armPosition = 75.0
 
         # standard classes for controlling our arm
@@ -54,7 +63,7 @@ class MyRobot(wpilib.TimedRobot):
 
     def teleopPeriodic(self) -> None:
         if self.joystick.getTrigger():
-            # Here we run PID control like normal, with a set point read from
+            # Here we run PID control like normal, with a setpoint read from
             # preferences in degrees
             pid_output = self.controller.calculate(
                 self.encoder.getDistance(),
